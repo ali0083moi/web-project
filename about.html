@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>پلتفرم بازی سوال و جواب - صفحه اصلی</title>
+    <title>درباره ما - پلتفرم بازی سوال و جواب</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -86,7 +86,7 @@
             <li>
               <a
                 href="index.html"
-                class="text-game-primary transition-colors duration-300"
+                class="hover:text-game-primary transition-colors duration-300"
                 >صفحه اصلی</a
               >
             </li>
@@ -100,7 +100,7 @@
             <li>
               <a
                 href="about.html"
-                class="hover:text-game-primary transition-colors duration-300"
+                class="text-game-primary transition-colors duration-300"
                 >درباره ما</a
               >
             </li>
@@ -186,97 +186,72 @@
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8">
-      <section class="text-center mb-16">
-        <h1 class="text-5xl font-bold text-game-primary mb-4">
-          به دنیای سوال و جواب خوش آمدید!
+      <section class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-game-primary mb-4">
+          درباره پروژه بازی سوال و جواب
         </h1>
         <p class="text-xl mb-8">
-          دانش خود را به چالش بکشید، با دوستان رقابت کنید و جوایز هیجان‌انگیز
-          ببرید.
+          پلتفرم آنلاین برای بازی سوال و جواب با قابلیت‌های متنوع و جذاب
         </p>
-        <div class="space-x-4 space-x-reverse">
-          <a
-            href="#"
-            class="bg-game-secondary hover:bg-opacity-90 text-white font-bold py-3 px-8 rounded-full inline-block transition-colors duration-300"
-            >شروع بازی</a
-          >
-          <a
-            href="#"
-            class="bg-game-accent hover:bg-opacity-90 text-white font-bold py-3 px-8 rounded-full inline-block transition-colors duration-300"
-            >ثبت نام</a
-          >
-        </div>
-      </section>
-
-      <section class="grid md:grid-cols-3 gap-8 mb-16">
-        <div
-          class="bg-game-surface-light dark:bg-game-surface-dark p-6 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
-        >
-          <h2 class="text-2xl font-bold text-game-primary mb-4">
-            موضوعات متنوع
-          </h2>
-          <p>
-            از تاریخ و علوم گرفته تا ورزش و سرگرمی، موضوعات متنوعی را کاوش کنید
-            و دانش خود را گسترش دهید.
-          </p>
-        </div>
-        <div
-          class="bg-game-surface-light dark:bg-game-surface-dark p-6 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
-        >
-          <h2 class="text-2xl font-bold text-game-primary mb-4">
-            رقابت آنلاین
-          </h2>
-          <p>
-            با بازیکنان از سراسر ایران و جهان رقابت کنید، دوستان جدید پیدا کنید
-            و مهارت‌های خود را محک بزنید.
-          </p>
-        </div>
-        <div
-          class="bg-game-surface-light dark:bg-game-surface-dark p-6 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
-        >
-          <h2 class="text-2xl font-bold text-game-primary mb-4">جوایز هفتگی</h2>
-          <p>
-            با کسب امتیاز و رتبه‌بندی بالا، شانس خود را برای بردن جوایز هفتگی
-            هیجان‌انگیز افزایش دهید.
-          </p>
-        </div>
       </section>
 
       <section
-        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-16"
+        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-12"
       >
-        <h2 class="text-3xl font-bold text-game-primary mb-6 text-center">
-          چگونه شروع کنیم؟
+        <h2 class="text-2xl font-bold text-game-secondary mb-4">
+          ویژگی‌های اصلی
         </h2>
-        <ol class="list-decimal list-inside space-y-4">
-          <li class="text-lg">ثبت نام کنید و یک حساب کاربری بسازید.</li>
-          <li class="text-lg">موضوع مورد علاقه خود را انتخاب کنید.</li>
-          <li class="text-lg">به سوالات پاسخ دهید و امتیاز جمع کنید.</li>
-          <li class="text-lg">
-            با دوستان خود رقابت کنید و در لیدربورد بالا بروید.
-          </li>
-          <li class="text-lg">
-            جوایز هفتگی را برنده شوید و از بازی لذت ببرید!
-          </li>
-        </ol>
+        <ul class="list-disc list-inside space-y-2">
+          <li>ثبت نام و ورود کاربران</li>
+          <li>پنل مدیریت برای طراحان سوال</li>
+          <li>امکان ایجاد، ویرایش و حذف سوالات</li>
+          <li>دسته‌بندی سوالات</li>
+          <li>سیستم امتیازدهی و رتبه‌بندی</li>
+          <li>نمایش جدول امتیازات (Scoreboard)</li>
+          <li>قابلیت بازی تکی و چند نفره</li>
+          <li>طراحی واکنش‌گرا (Responsive) برای استفاده در دستگاه‌های مختلف</li>
+        </ul>
       </section>
 
-      <section class="text-center">
-        <h2 class="text-3xl font-bold text-game-primary mb-6">
-          آماده‌اید تا دانش خود را به چالش بکشید؟
+      <section
+        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-12"
+      >
+        <h2 class="text-2xl font-bold text-game-secondary mb-4">
+          تکنولوژی‌های مورد استفاده
         </h2>
-        <a
-          href="#"
-          class="bg-game-primary hover:bg-opacity-90 text-white font-bold py-3 px-8 rounded-full inline-block transition-colors duration-300"
-          >همین حالا شروع کنید</a
-        >
+        <ul class="list-disc list-inside space-y-2">
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>JavaScript</li>
+          <li>Tailwind CSS</li>
+        </ul>
+      </section>
+
+      <section
+        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg"
+      >
+        <h2 class="text-2xl font-bold text-game-secondary mb-4">اعضای تیم</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-2">علی مقدسی</h3>
+            <p>شماره دانشجویی: 402106542</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">مائده حیدری</h3>
+            <p>شماره دانشجویی: 400104918</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">علیرضا میرشفیعیان</h3>
+            <p>شماره دانشجویی: 401106628</p>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer
-      class="bg-game-surface-light dark:bg-game-surface-dark text-game-text-light dark:text-game-text-dark py-8"
+      class="bg-game-surface-light dark:bg-game-surface-dark text-game-text-light dark:text-game-text-dark py-6"
     >
-      <div class="container mx-auto px-4 flex justify-center items-center">
+      <div class="container mx-auto px-4 text-center">
         <p>&copy; 2023 پلتفرم بازی سوال و جواب. تمامی حقوق محفوظ است.</p>
       </div>
     </footer>
