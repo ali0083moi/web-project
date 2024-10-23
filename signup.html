@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت نام - پلتفرم بازی سوال و جواب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        game: {
+                            primary: '#6366F1',
+                            secondary: '#10B981',
+                            accent: '#F59E0B',
+                            background: {
+                                light: '#F3F4F6',
+                                dark: '#111827',
+                            },
+                            surface: {
+                                light: '#FFFFFF',
+                                dark: '#1F2937',
+                            },
+                            text: {
+                                light: '#1F2937',
+                                dark: '#F3F4F6',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        'game': ['Vazirmatn', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        .dark .dark\:bg-game-background-dark {
+            background-color: #111827;
+        }
+        .dark .dark\:bg-game-surface-dark {
+            background-color: #1F2937;
+        }
+        .dark .dark\:text-game-text-dark {
+            color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-game-background-light dark:bg-game-background-dark text-game-text-light dark:text-game-text-dark font-game min-h-screen flex flex-col transition-colors duration-300">
+    <header class="bg-game-surface-light dark:bg-game-surface-dark shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-game-primary">پلتفرم بازی سوال و جواب</a>
+            <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
+                <ul class="flex space-x-6 space-x-reverse">
+                    <li><a href="#" class="hover:text-game-primary transition-colors">صفحه اصلی</a></li>
+                    <li><a href="#" class="hover:text-game-primary transition-colors">ورود</a></li>
+                    <li><a href="#" class="hover:text-game-primary transition-colors">ثبت نام</a></li>
+                </ul>
+                <button id="theme-toggle" class="p-2 rounded-full bg-game-surface-dark dark:bg-game-surface-light text-game-text-dark dark:text-game-text-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </nav>
+            <button class="md:hidden text-game-text-light dark:text-game-text-dark hover:text-game-primary transition-colors" id="menu-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <ul class="px-4 py-2 space-y-2">
+                <li><a href="#" class="block hover:text-game-primary transition-colors">صفحه اصلی</a></li>
+                <li><a href="#" class="block hover:text-game-primary transition-colors">ورود</a></li>
+                <li><a href="#" class="block hover:text-game-primary transition-colors">ثبت نام</a></li>
+            </ul>
+            <button id="theme-toggle-mobile" class="w-full text-right px-4 py-2 hover:text-game-primary transition-colors">
+                تغییر حالت روشن/تاریک
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg  p-8 w-full max-w-md">
+            <h1 class="text-3xl font-bold text-game-primary mb-6 text-center">ثبت نام در پلتفرم</h1>
+            <form class="space-y-6">
+                <div>
+                    <label for="username" class="block text-game-text-light dark:text-game-text-dark font-bold mb-2">نام کاربری</label>
+                    <input type="text" id="username" name="username" class="w-full px-3 py-2 bg-game-background-light dark:bg-game-background-dark border border-game-primary rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-game-text-light dark:text-game-text-dark font-bold mb-2">ایمیل</label>
+                    <input type="email" id="email" name="email" class="w-full px-3 py-2 bg-game-background-light dark:bg-game-background-dark border border-game-primary rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary" required>
+                </div>
+                <div>
+                    <label for="password" class="block text-game-text-light dark:text-game-text-dark font-bold mb-2">رمز عبور</label>
+                    <input type="password" id="password" name="password" class="w-full px-3 py-2 bg-game-background-light dark:bg-game-background-dark border border-game-primary rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary" required>
+                </div>
+                <div>
+                    <label for="confirm-password" class="block text-game-text-light dark:text-game-text-dark font-bold mb-2">تکرار رمز عبور</label>
+                    <input type="password" id="confirm-password" name="confirm-password" class="w-full px-3 py-2 bg-game-background-light dark:bg-game-background-dark border border-game-primary rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary" required>
+                </div>
+                <div>
+                    <label for="user-type" class="block text-game-text-light dark:text-game-text-dark font-bold mb-2">نوع کاربر</label>
+                    <select id="user-type" name="user-type" class="w-full px-3 py-2 bg-game-background-light dark:bg-game-background-dark border border-game-primary rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary" required>
+                        <option value="">انتخاب کنید</option>
+                        <option value="player">بازیکن</option>
+                        <option value="designer">طراح سوال</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="terms" name="terms" class="form-checkbox text-game-primary" required>
+                    <label for="terms" class="mr-2 text-game-text-light dark:text-game-text-dark">
+                        با <a href="#" class="text-game-secondary hover:text-game-primary transition-colors">قوانین و مقررات</a> موافقم
+                    </label>
+                </div>
+                <button type="submit" class="w-full bg-game-primary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
+                    ثبت نام
+                </button>
+            </form>
+            <div class="mt-6 text-center">
+                <p class="text-game-text-light dark:text-game-text-dark">قبلاً ثبت نام کرده‌اید؟ <a href="#" class="text-game-secondary hover:text-game-primary transition-colors">وارد شوید</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-game-surface-light dark:bg-game-surface-dark text-game-text-light dark:text-game-text-dark py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 پلتفرم بازی سوال و جواب. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        themeToggle.addEventListener('click', toggleDarkMode);
+        themeToggleMobile.addEventListener('click', toggleDarkMode);
+
+        // Check for saved theme preference or use system preference
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('darkMode');
+
+        if (savedTheme === 'true' || (savedTheme === null && prefersDarkMode)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</body>
+</html>
