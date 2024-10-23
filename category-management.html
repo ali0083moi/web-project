@@ -79,7 +79,7 @@
         class="container mx-auto px-4 py-4 flex justify-between items-center"
       >
         <a href="index.html" class="text-2xl font-bold text-game-primary"
-          >پلتفرم بازی سوال و جواب</a
+          >پلفرم بازی سوال و جواب</a
         >
         <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
           <ul class="flex space-x-6 space-x-reverse">
@@ -226,11 +226,18 @@
               <td class="py-2">
                 <button
                   class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                  onclick="openEditModal(this)"
+                  data-id="1"
+                  data-name="تاریخ"
+                  data-description="توضیحات دسته‌بندی تاریخ"
                 >
                   ویرایش
                 </button>
                 <button
                   class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                  onclick="confirmDelete(this)"
+                  data-id="1"
+                  data-name="تاریخ"
                 >
                   حذف
                 </button>
@@ -242,11 +249,18 @@
               <td class="py-2">
                 <button
                   class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                  onclick="openEditModal(this)"
+                  data-id="2"
+                  data-name="علوم"
+                  data-description="توضیحات دسته‌بندی علوم"
                 >
                   ویرایش
                 </button>
                 <button
                   class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                  onclick="confirmDelete(this)"
+                  data-id="2"
+                  data-name="علوم"
                 >
                   حذف
                 </button>
@@ -258,11 +272,18 @@
               <td class="py-2">
                 <button
                   class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                  onclick="openEditModal(this)"
+                  data-id="3"
+                  data-name="ادبیات"
+                  data-description="توضیحات دسته‌بندی ادبیات"
                 >
                   ویرایش
                 </button>
                 <button
                   class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                  onclick="confirmDelete(this)"
+                  data-id="3"
+                  data-name="ادبیات"
                 >
                   حذف
                 </button>
@@ -280,7 +301,7 @@
           class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-md w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
         >
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-game-secondary">
+            <h2 class="text-2xl font-bold text-game-secondary" id="modalTitle">
               افزودن دسته‌بندی جدید
             </h2>
             <button
@@ -302,7 +323,8 @@
               </svg>
             </button>
           </div>
-          <form class="space-y-4">
+          <form class="space-y-4" id="categoryForm">
+            <input type="hidden" id="category-id" name="category-id" value="" />
             <div>
               <label for="category-name" class="block text-sm font-medium mb-1"
                 >نام دسته‌بندی</label
@@ -338,12 +360,59 @@
               </button>
               <button
                 type="submit"
+                id="submitButton"
                 class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
               >
                 افزودن
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <div
+        id="deleteModal"
+        class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
+      >
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-md w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-red-500">حذف دسته‌بندی</h2>
+            <button
+              onclick="closeDeleteModal()"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <p class="mb-4" id="deleteConfirmText"></p>
+          <div class="flex justify-end space-x-2 space-x-reverse">
+            <button
+              onclick="closeDeleteModal()"
+              class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              انصراف
+            </button>
+            <button
+              onclick="deleteCategory()"
+              class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              حذف
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -393,7 +462,29 @@
       const openModalBtn = document.getElementById("openModalBtn");
       const closeModalBtn = document.getElementById("closeModalBtn");
 
+      function openEditModal(button) {
+        const categoryId = button.dataset.id;
+        const categoryName = button.dataset.name;
+        const categoryDescription = button.dataset.description;
+
+        document.getElementById("modalTitle").textContent = "ویرایش دسته‌بندی";
+        document.getElementById("category-id").value = categoryId;
+        document.getElementById("category-name").value = categoryName;
+        document.getElementById("category-description").value =
+          categoryDescription;
+        document.getElementById("submitButton").textContent = "ذخیره تغییرات";
+
+        openModal();
+      }
+
       function openModal() {
+        if (!document.getElementById("category-id").value) {
+          document.getElementById("modalTitle").textContent =
+            "افزودن دسته‌بندی جدید";
+          document.getElementById("categoryForm").reset();
+          document.getElementById("submitButton").textContent = "افزودن";
+        }
+
         modal.classList.add("modal-active");
         document.body.style.overflow = "hidden";
       }
@@ -401,6 +492,9 @@
       function closeModal() {
         modal.classList.remove("modal-active");
         document.body.style.overflow = "auto";
+        document.getElementById("categoryForm").reset();
+        document.getElementById("category-id").value = "";
+        document.getElementById("submitButton").textContent = "افزودن";
       }
 
       openModalBtn.addEventListener("click", openModal);
@@ -415,6 +509,81 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modal.classList.contains("modal-active")) {
           closeModal();
+        }
+      });
+
+      const deleteModal = document.getElementById("deleteModal");
+      let categoryToDelete = null;
+
+      deleteModal.style.backdropFilter = "blur(0px)";
+      deleteModal.style.pointerEvents = "none";
+
+      function confirmDelete(button) {
+        categoryToDelete = {
+          id: button.dataset.id,
+          name: button.dataset.name,
+        };
+
+        document.getElementById(
+          "deleteConfirmText"
+        ).textContent = `آیا از حذف دسته‌بندی "${categoryToDelete.name}" اطمینان دارید؟`;
+
+        openDeleteModal();
+      }
+
+      function openDeleteModal() {
+        deleteModal.classList.add("modal-active");
+        deleteModal.style.opacity = "1";
+        deleteModal.style.zIndex = "50";
+        deleteModal.style.backdropFilter = "blur(4px)";
+        deleteModal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        deleteModal.style.pointerEvents = "auto";
+        deleteModal.querySelector("div").style.opacity = "1";
+        deleteModal.querySelector("div").style.transform = "scale(1)";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeDeleteModal() {
+        deleteModal.classList.remove("modal-active");
+        deleteModal.style.opacity = "0";
+        deleteModal.style.zIndex = "-10";
+        deleteModal.style.backdropFilter = "blur(0px)";
+        deleteModal.style.pointerEvents = "none";
+        deleteModal.querySelector("div").style.opacity = "0";
+        deleteModal.querySelector("div").style.transform = "scale(0.95)";
+        document.body.style.overflow = "auto";
+        categoryToDelete = null;
+      }
+
+      function deleteCategory() {
+        if (!categoryToDelete) return;
+
+        console.log(`Deleting category with ID: ${categoryToDelete.id}`);
+
+        const row = document
+          .querySelector(`button[data-id="${categoryToDelete.id}"]`)
+          .closest("tr");
+        row.remove();
+
+        closeDeleteModal();
+
+        alert(`دسته‌بندی "${categoryToDelete.name}" با موفقیت حذف شد.`);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (deleteModal.classList.contains("modal-active")) {
+            closeDeleteModal();
+          }
+          if (modal.classList.contains("modal-active")) {
+            closeModal();
+          }
+        }
+      });
+
+      deleteModal.addEventListener("click", (e) => {
+        if (e.target === deleteModal) {
+          closeDeleteModal();
         }
       });
     </script>
