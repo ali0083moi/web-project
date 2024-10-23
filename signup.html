@@ -47,6 +47,35 @@
         .dark .dark\:text-game-text-dark {
             color: #F3F4F6;
         }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal:target {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal:target .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="bg-game-background-light dark:bg-game-background-dark text-game-text-light dark:text-game-text-dark font-game min-h-screen flex flex-col transition-colors duration-300">
@@ -55,9 +84,9 @@
             <a href="#" class="text-2xl font-bold text-game-primary">پلتفرم بازی سوال و جواب</a>
             <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
                 <ul class="flex space-x-6 space-x-reverse">
-                    <li><a href="#" class="hover:text-game-primary transition-colors">صفحه اصلی</a></li>
-                    <li><a href="#" class="hover:text-game-primary transition-colors">ورود</a></li>
-                    <li><a href="#" class="hover:text-game-primary transition-colors">ثبت نام</a></li>
+                    <li><a href="index.html" class="hover:text-game-primary transition-colors">صفحه اصلی</a></li>
+                    <li><a href="login.html" class="hover:text-game-primary transition-colors">ورود</a></li>
+                    <li><a href="#" class="text-game-primary transition-colors">ثبت نام</a></li>
                 </ul>
                 <button id="theme-toggle" class="p-2 rounded-full bg-game-surface-dark dark:bg-game-surface-light text-game-text-dark dark:text-game-text-light">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -114,7 +143,7 @@
                 <div class="flex items-center">
                     <input type="checkbox" id="terms" name="terms" class="form-checkbox text-game-primary" required>
                     <label for="terms" class="mr-2 text-game-text-light dark:text-game-text-dark">
-                        با <a href="#" class="text-game-secondary hover:text-game-primary transition-colors">قوانین و مقررات</a> موافقم
+                        با <a href="#termsModal" class="text-game-secondary hover:text-game-primary transition-colors">قوانین و مقررات</a> موافقم
                     </label>
                 </div>
                 <button type="submit" class="w-full bg-game-primary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
@@ -122,7 +151,7 @@
                 </button>
             </form>
             <div class="mt-6 text-center">
-                <p class="text-game-text-light dark:text-game-text-dark">قبلاً ثبت نام کرده‌اید؟ <a href="#" class="text-game-secondary hover:text-game-primary transition-colors">وارد شوید</a></p>
+                <p class="text-game-text-light dark:text-game-text-dark">قبلاً ثبت نام کرده‌اید؟ <a href="login.html" class="text-game-secondary hover:text-game-primary transition-colors">وارد شوید</a></p>
             </div>
         </div>
     </main>
@@ -152,7 +181,6 @@
         themeToggle.addEventListener('click', toggleDarkMode);
         themeToggleMobile.addEventListener('click', toggleDarkMode);
 
-        // Check for saved theme preference or use system preference
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const savedTheme = localStorage.getItem('darkMode');
 
@@ -162,5 +190,17 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+
+    <div id="termsModal" class="modal">
+        <div class="modal-content bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <h2 class="text-2xl font-bold mb-4 text-game-primary">قوانین و مقررات سایت پرسش و پاسخ</h2>
+            <div class="text-game-text-light dark:text-game-text-dark mb-6">
+                <p>پرسش‌ها باید به صورت واضح و مرتبط با موضوعات سایت مطرح شوند. همچنین پاسخ‌ها باید دقیق، کامل و در راستای کمک به سایر کاربران باشند.</p>
+                <p>هرگونه محتوای تبلیغاتی ممنوع است.</p>
+                <p>کاربران نباید محتوای کپی شده از منابع دیگر را بدون ذکر منبع منتشر کنند.</p>
+            </div>
+            <a href="#" class="bg-game-primary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 inline-block">بستن</a>
+        </div>
+    </div>
 </body>
 </html>
