@@ -205,29 +205,51 @@
               <td class="py-2">آسان</td>
               <td class="py-2">
                 <button
-                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2 edit-btn"
+                  data-id="1"
+                  data-question="پایتخت ایران کدام شهر است؟"
+                  data-category="geography"
+                  data-difficulty="easy"
+                  data-option1="تهران"
+                  data-option2="اصفهان"
+                  data-option3="تبریز"
+                  data-option4="شیراز"
+                  data-correct="1"
                 >
                   ویرایش
                 </button>
                 <button
-                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm delete-btn"
+                  data-id="1"
+                  data-question="پایتخت ایران کدام شهر است؟"
                 >
                   حذف
                 </button>
               </td>
             </tr>
             <tr class="border-b border-gray-200 dark:border-gray-700">
-              <td class="py-2">نویسنده کتاب "جنگ و صل" کیست؟</td>
+              <td class="py-2">نویسنده کتاب "جنگ و صلح" کیست؟</td>
               <td class="py-2">ادبیات</td>
               <td class="py-2">متوسط</td>
               <td class="py-2">
                 <button
-                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2 edit-btn"
+                  data-id="2"
+                  data-question="نویسنده کتاب 'جنگ و صلح' کیست؟"
+                  data-category="literature"
+                  data-difficulty="medium"
+                  data-option1="لئو تولستوی"
+                  data-option2="داستایوفسکی"
+                  data-option3="ویکتور هوگو"
+                  data-option4="چارلز دیکنز"
+                  data-correct="1"
                 >
                   ویرایش
                 </button>
                 <button
-                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm delete-btn"
+                  data-id="2"
+                  data-question="نویسنده کتاب 'جنگ و صلح' کیست؟"
                 >
                   حذف
                 </button>
@@ -239,12 +261,23 @@
               <td class="py-2">آسان</td>
               <td class="py-2">
                 <button
-                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2 edit-btn"
+                  data-id="3"
+                  data-question="فرمول شیمیایی آب چیست؟"
+                  data-category="science"
+                  data-difficulty="easy"
+                  data-option1="H2O"
+                  data-option2="CO2"
+                  data-option3="O2"
+                  data-option4="H2SO4"
+                  data-correct="1"
                 >
                   ویرایش
                 </button>
                 <button
-                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm delete-btn"
+                  data-id="3"
+                  data-question="فرمول شیمیایی آب چیست؟"
                 >
                   حذف
                 </button>
@@ -262,7 +295,7 @@
           class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-3xl w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
         >
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-game-secondary">
+            <h2 class="text-2xl font-bold text-game-secondary" id="modalTitle">
               افزودن سوال جدید
             </h2>
             <button
@@ -285,7 +318,7 @@
             </button>
           </div>
 
-          <form class="space-y-4">
+          <form id="questionForm" class="space-y-4">
             <div>
               <label for="question-text" class="block text-sm font-medium mb-1"
                 >متن سوال</label
@@ -477,18 +510,84 @@
       const modal = document.getElementById("questionModal");
       const openModalBtn = document.getElementById("openModalBtn");
       const closeModalBtn = document.getElementById("closeModalBtn");
+      const modalTitle = document.getElementById("modalTitle");
+      const questionForm = document.getElementById("questionForm");
+      let isEditing = false;
+      let editingId = null;
 
-      function openModal() {
+      function openModal(isEdit = false, data = null) {
         modal.classList.add("modal-active");
         document.body.style.overflow = "hidden";
+
+        if (isEdit && data) {
+          isEditing = true;
+          modalTitle.textContent = "ویرایش سوال";
+          fillFormWithData(data);
+        } else {
+          isEditing = false;
+          modalTitle.textContent = "افزودن سوال جدید";
+          questionForm.reset();
+        }
+      }
+
+      function fillFormWithData(data) {
+        document.getElementById("question-text").value = data.question;
+        document.querySelector('input[name="option1"]').value = data.option1;
+        document.querySelector('input[name="option2"]').value = data.option2;
+        document.querySelector('input[name="option3"]').value = data.option3;
+        document.querySelector('input[name="option4"]').value = data.option4;
+        document.getElementById("category").value = data.category;
+        document.getElementById("difficulty").value = data.difficulty;
+        document.getElementById("correct-answer").value = data.correct;
       }
 
       function closeModal() {
         modal.classList.remove("modal-active");
         document.body.style.overflow = "auto";
+        isEditing = false;
+        editingId = null;
       }
 
-      openModalBtn.addEventListener("click", openModal);
+      document.querySelectorAll(".edit-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          const data = {
+            question: button.dataset.question,
+            category: button.dataset.category,
+            difficulty: button.dataset.difficulty,
+            option1: button.dataset.option1,
+            option2: button.dataset.option2,
+            option3: button.dataset.option3,
+            option4: button.dataset.option4,
+            correct: button.dataset.correct,
+          };
+          openModal(true, data);
+        });
+      });
+
+      questionForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = {
+          question: document.getElementById("question-text").value,
+          category: document.getElementById("category").value,
+          difficulty: document.getElementById("difficulty").value,
+          option1: document.querySelector('input[name="option1"]').value,
+          option2: document.querySelector('input[name="option2"]').value,
+          option3: document.querySelector('input[name="option3"]').value,
+          option4: document.querySelector('input[name="option4"]').value,
+          correct: document.getElementById("correct-answer").value,
+        };
+
+        if (isEditing) {
+          console.log("Updating question:", formData);
+        } else {
+          console.log("Creating new question:", formData);
+        }
+
+        closeModal();
+      });
+
+      openModalBtn.addEventListener("click", () => openModal());
       closeModalBtn.addEventListener("click", closeModal);
 
       modal.addEventListener("click", (e) => {
@@ -500,6 +599,144 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modal.classList.contains("modal-active")) {
           closeModal();
+        }
+      });
+    </script>
+
+    <div
+      id="deleteModal"
+      class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
+    >
+      <div
+        class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-md w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold text-red-500">حذف سوال</h2>
+          <button
+            id="closeDeleteModalBtn"
+            class="text-gray-500 hover:text-gray-700"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="mb-6">
+          <p class="text-lg mb-2">آیا از حذف این سوال اطمینان دارید؟</p>
+          <p
+            id="deleteQuestionText"
+            class="text-gray-600 dark:text-gray-400"
+          ></p>
+        </div>
+
+        <div class="flex justify-end space-x-2 space-x-reverse">
+          <button
+            id="cancelDeleteBtn"
+            class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+          >
+            انصراف
+          </button>
+          <button
+            id="confirmDeleteBtn"
+            class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+          >
+            حذف
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      #deleteModal {
+        backdrop-filter: blur(0px);
+        pointer-events: none;
+      }
+
+      #deleteModal.modal-active {
+        opacity: 1;
+        z-index: 50;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+
+      #deleteModal.modal-active > div {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+
+    <script>
+      const deleteModal = document.getElementById("deleteModal");
+      const closeDeleteModalBtn = document.getElementById(
+        "closeDeleteModalBtn"
+      );
+      const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+      const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+      const deleteQuestionText = document.getElementById("deleteQuestionText");
+      let deleteQuestionId = null;
+
+      function openDeleteModal(id, questionText) {
+        deleteModal.classList.add("modal-active");
+        document.body.style.overflow = "hidden";
+        deleteQuestionId = id;
+        deleteQuestionText.textContent = questionText;
+      }
+
+      function closeDeleteModal() {
+        deleteModal.classList.remove("modal-active");
+        document.body.style.overflow = "auto";
+        deleteQuestionId = null;
+      }
+
+      document.querySelectorAll(".delete-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.id;
+          const question = button.dataset.question;
+          openDeleteModal(id, question);
+        });
+      });
+
+      closeDeleteModalBtn.addEventListener("click", closeDeleteModal);
+      cancelDeleteBtn.addEventListener("click", closeDeleteModal);
+
+      confirmDeleteBtn.addEventListener("click", () => {
+        if (deleteQuestionId) {
+          console.log("Deleting question with ID:", deleteQuestionId);
+
+          const row = document
+            .querySelector(`[data-id="${deleteQuestionId}"]`)
+            .closest("tr");
+          if (row) {
+            row.remove();
+          }
+        }
+        closeDeleteModal();
+      });
+
+      deleteModal.addEventListener("click", (e) => {
+        if (e.target === deleteModal) {
+          closeDeleteModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          deleteModal.classList.contains("modal-active")
+        ) {
+          closeDeleteModal();
         }
       });
     </script>
