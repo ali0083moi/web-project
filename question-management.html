@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مدیریت سوالات - پلتفرم بازی سوال و جواب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              game: {
+                primary: "#6366F1",
+                secondary: "#10B981",
+                accent: "#F59E0B",
+                background: {
+                  light: "#F3F4F6",
+                  dark: "#111827",
+                },
+                surface: {
+                  light: "#FFFFFF",
+                  dark: "#1F2937",
+                },
+                text: {
+                  light: "#1F2937",
+                  dark: "#F3F4F6",
+                },
+              },
+            },
+            fontFamily: {
+              game: ["Vazirmatn", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      .dark .dark\:bg-game-background-dark {
+        background-color: #111827;
+      }
+      .dark .dark\:bg-game-surface-dark {
+        background-color: #1f2937;
+      }
+      .dark .dark\:text-game-text-dark {
+        color: #f3f4f6;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-game-background-light dark:bg-game-background-dark text-game-text-light dark:text-game-text-dark font-game min-h-screen flex flex-col transition-colors duration-300"
+  >
+    <header class="bg-game-surface-light dark:bg-game-surface-dark shadow-lg">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-game-primary"
+          >پلتفرم بازی سوال و جواب</a
+        >
+        <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
+          <ul class="flex space-x-6 space-x-reverse">
+            <li>
+              <a
+                href="designer-main.html"
+                class="hover:text-game-primary transition-colors"
+                >داشبورد</a
+              >
+            </li>
+            <li>
+              <a
+                href="question-management.html"
+                class="text-game-primary transition-colors"
+                >مدیریت سوالات</a
+              >
+            </li>
+            <li>
+              <a
+                href="category-management.html"
+                class="hover:text-game-primary transition-colors"
+                >مدیریت دسته‌بندی‌ها</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-game-primary transition-colors"
+                >خروج</a
+              >
+            </li>
+          </ul>
+          <button
+            id="theme-toggle"
+            class="p-2 rounded-full bg-game-surface-dark dark:bg-game-surface-light text-game-text-dark dark:text-game-text-light"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
+            </svg>
+          </button>
+        </nav>
+        <button
+          class="md:hidden text-game-text-light dark:text-game-text-dark hover:text-game-primary transition-colors"
+          id="menu-toggle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <ul class="px-4 py-2 space-y-2">
+          <li>
+            <a
+              href="designer-main.html"
+              class="block hover:text-game-primary transition-colors"
+              >داشبورد</a
+            >
+          </li>
+          <li>
+            <a
+              href="question-management.html"
+              class="block hover:text-game-primary transition-colors"
+              >مدیریت سوالات</a
+            >
+          </li>
+          <li>
+            <a
+              href="category-management.html"
+              class="block hover:text-game-primary transition-colors"
+              >مدیریت دسته‌بندی‌ها</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html"
+              class="block hover:text-game-primary transition-colors"
+              >خروج</a
+            >
+          </li>
+        </ul>
+        <button
+          id="theme-toggle-mobile"
+          class="w-full text-right px-4 py-2 hover:text-game-primary transition-colors"
+        >
+          تغییر حالت روشن/تاریک
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-game-primary">مدیریت سوالات</h1>
+        <button
+          id="openModalBtn"
+          class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+        >
+          افزودن سوال جدید
+        </button>
+      </div>
+
+      <div
+        class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
+      >
+        <h2 class="text-2xl font-bold text-game-accent mb-4">لیست سوالات</h2>
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-right py-2">سوال</th>
+              <th class="text-right py-2">دسته‌بندی</th>
+              <th class="text-right py-2">سطح دشواری</th>
+              <th class="text-right py-2">عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="py-2">پایتخت ایران کدام شهر است؟</td>
+              <td class="py-2">جغرافیا</td>
+              <td class="py-2">آسان</td>
+              <td class="py-2">
+                <button
+                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                >
+                  ویرایش
+                </button>
+                <button
+                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                >
+                  حذف
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="py-2">نویسنده کتاب "جنگ و صل" کیست؟</td>
+              <td class="py-2">ادبیات</td>
+              <td class="py-2">متوسط</td>
+              <td class="py-2">
+                <button
+                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                >
+                  ویرایش
+                </button>
+                <button
+                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                >
+                  حذف
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-2">فرمول شیمیایی آب چیست؟</td>
+              <td class="py-2">علوم</td>
+              <td class="py-2">آسان</td>
+              <td class="py-2">
+                <button
+                  class="bg-game-secondary text-white px-2 py-1 rounded-md text-sm mr-2"
+                >
+                  ویرایش
+                </button>
+                <button
+                  class="bg-red-500 text-white px-2 py-1 rounded-md text-sm"
+                >
+                  حذف
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        id="questionModal"
+        class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
+      >
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-3xl w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-game-secondary">
+              افزودن سوال جدید
+            </h2>
+            <button
+              id="closeModalBtn"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form class="space-y-4">
+            <div>
+              <label for="question-text" class="block text-sm font-medium mb-1"
+                >متن سوال</label
+              >
+              <textarea
+                id="question-text"
+                name="question-text"
+                rows="3"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">گزینه‌ها</label>
+              <div class="space-y-2">
+                <div class="flex gap-4">
+                  <input
+                    type="text"
+                    name="option1"
+                    placeholder="گزینه 1"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="option2"
+                    placeholder="گزینه 2"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                </div>
+                <div class="flex gap-4">
+                  <input
+                    type="text"
+                    name="option3"
+                    placeholder="گزینه 3"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="option4"
+                    placeholder="گزینه 4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex w-full gap-4">
+              <div class="w-1/3">
+                <label for="category" class="block text-sm font-medium mb-1"
+                  >دسته‌بندی</label
+                >
+                <select
+                  id="category"
+                  name="category"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                  required
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="history">تاریخ</option>
+                  <option value="science">علوم</option>
+                  <option value="literature">ادبیات</option>
+                </select>
+              </div>
+              <div class="w-1/3">
+                <label for="difficulty" class="block text-sm font-medium mb-1"
+                  >سطح دشواری</label
+                >
+                <select
+                  id="difficulty"
+                  name="difficulty"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                  required
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="easy">آسان</option>
+                  <option value="medium">متوسط</option>
+                  <option value="hard">دشوار</option>
+                </select>
+              </div>
+              <div class="w-1/3">
+                <label
+                  for="correct-answer"
+                  class="block text-sm font-medium mb-1"
+                  >پاسخ صحیح</label
+                >
+                <select
+                  id="correct-answer"
+                  name="correct-answer"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                  required
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="1">گزینه 1</option>
+                  <option value="2">گزینه 2</option>
+                  <option value="3">گزینه 3</option>
+                  <option value="4">گزینه 4</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 space-x-reverse pt-4">
+              <button
+                type="button"
+                class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+                onclick="closeModal()"
+              >
+                انصراف
+              </button>
+              <button
+                type="submit"
+                class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+              >
+                افزودن
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="bg-game-surface-light dark:bg-game-surface-dark text-game-text-light dark:text-game-text-dark py-6"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2023 پلتفرم بازی سوال و جواب. تمامی حقوق محفوظ است.</p>
+      </div>
+    </footer>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.documentElement.classList.contains("dark")
+        );
+      }
+
+      themeToggle.addEventListener("click", toggleDarkMode);
+      themeToggleMobile.addEventListener("click", toggleDarkMode);
+
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const savedTheme = localStorage.getItem("darkMode");
+
+      if (savedTheme === "true" || (savedTheme === null && prefersDarkMode)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+
+    <style>
+      #questionModal {
+        backdrop-filter: blur(0px);
+        pointer-events: none;
+      }
+
+      #questionModal.modal-active {
+        opacity: 1;
+        z-index: 50;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+
+      #questionModal.modal-active > div {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+
+    <script>
+      const modal = document.getElementById("questionModal");
+      const openModalBtn = document.getElementById("openModalBtn");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+
+      function openModal() {
+        modal.classList.add("modal-active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        modal.classList.remove("modal-active");
+        document.body.style.overflow = "auto";
+      }
+
+      openModalBtn.addEventListener("click", openModal);
+      closeModalBtn.addEventListener("click", closeModal);
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("modal-active")) {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>

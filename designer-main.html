@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>صفحه اصلی طراح - پلتفرم بازی سوال و جواب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              game: {
+                primary: "#6366F1",
+                secondary: "#10B981",
+                accent: "#F59E0B",
+                background: {
+                  light: "#F3F4F6",
+                  dark: "#111827",
+                },
+                surface: {
+                  light: "#FFFFFF",
+                  dark: "#1F2937",
+                },
+                text: {
+                  light: "#1F2937",
+                  dark: "#F3F4F6",
+                },
+              },
+            },
+            fontFamily: {
+              game: ["Vazirmatn", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      .dark .dark\:bg-game-background-dark {
+        background-color: #111827;
+      }
+      .dark .dark\:bg-game-surface-dark {
+        background-color: #1f2937;
+      }
+      .dark .dark\:text-game-text-dark {
+        color: #f3f4f6;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-game-background-light dark:bg-game-background-dark text-game-text-light dark:text-game-text-dark font-game min-h-screen flex flex-col transition-colors duration-300"
+  >
+    <header class="bg-game-surface-light dark:bg-game-surface-dark shadow-lg">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-game-primary"
+          >پلتفرم بازی سوال و جواب</a
+        >
+        <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
+          <ul class="flex space-x-6 space-x-reverse">
+            <li>
+              <a
+                href="designer-main.html"
+                class="text-game-primary transition-colors"
+                >داشبورد</a
+              >
+            </li>
+            <li>
+              <a
+                href="question-management.html"
+                class="hover:text-game-primary transition-colors"
+                >مدیریت سوالات</a
+              >
+            </li>
+            <li>
+              <a
+                href="category-management.html"
+                class="hover:text-game-primary transition-colors"
+                >مدیریت دسته‌بندی‌ها</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-game-primary transition-colors"
+                >خروج</a
+              >
+            </li>
+          </ul>
+          <button
+            id="theme-toggle"
+            class="p-2 rounded-full bg-game-surface-dark dark:bg-game-surface-light text-game-text-dark dark:text-game-text-light"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
+            </svg>
+          </button>
+        </nav>
+        <button
+          class="md:hidden text-game-text-light dark:text-game-text-dark hover:text-game-primary transition-colors"
+          id="menu-toggle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <ul class="px-4 py-2 space-y-2">
+          <li>
+            <a
+              href="designer-main.html"
+              class="block hover:text-game-primary transition-colors"
+              >داشبورد</a
+            >
+          </li>
+          <li>
+            <a
+              href="question-management.html"
+              class="block hover:text-game-primary transition-colors"
+              >مدیریت سوالات</a
+            >
+          </li>
+          <li>
+            <a
+              href="category-management.html"
+              class="block hover:text-game-primary transition-colors"
+              >مدیریت دسته‌بندی‌ها</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html"
+              class="block hover:text-game-primary transition-colors"
+              >خروج</a
+            >
+          </li>
+        </ul>
+        <button
+          id="theme-toggle-mobile"
+          class="w-full text-right px-4 py-2 hover:text-game-primary transition-colors"
+        >
+          تغییر حالت روشن/تاریک
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold text-game-primary mb-8">داشبورد طراح</h1>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
+        >
+          <h2 class="text-2xl font-bold text-game-secondary mb-4">آمار کلی</h2>
+          <ul class="space-y-2">
+            <li>تعداد کل سوالات: <span class="font-bold">150</span></li>
+            <li>سوالات تأیید شده: <span class="font-bold">120</span></li>
+            <li>سوالات در انتظار تأیید: <span class="font-bold">30</span></li>
+            <li>میانگین امتیاز سوالات: <span class="font-bold">4.2/5</span></li>
+            <li>دنبال کنندگان: <span class="font-bold">1000</span></li>
+            <li>دنبال شده: <span class="font-bold">100</span></li>
+          </ul>
+        </div>
+
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
+        >
+          <h2 class="text-2xl font-bold text-game-accent mb-4">
+            فعالیت‌های اخیر
+          </h2>
+          <ul class="space-y-2">
+            <li>سوال جدید اضافه شد: "پایتخت ایران کدام شهر است؟"</li>
+            <li>سوال شما تأیید شد: "بزرگترین قاره جهان کدام است؟"</li>
+            <li>نظر جدید برای سوال شما: "سوال بسیار خوبی بود!"</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h2 class="text-2xl font-bold text-game-primary mb-4">سوالات اخیر</h2>
+        <table
+          class="w-full bg-game-surface-light dark:bg-game-surface-dark rounded-lg overflow-hidden"
+        >
+          <thead class="bg-game-primary text-white">
+            <tr>
+              <th class="p-3 text-right">سوال</th>
+              <th class="p-3 text-right">دسته‌بندی</th>
+              <th class="p-3 text-right">وضعیت</th>
+              <th class="p-3 text-right">عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="p-3">پایتخت فرانسه کدام شهر است؟</td>
+              <td class="p-3">جغرافیا</td>
+              <td class="p-3">تأیید شده</td>
+              <td class="p-3">
+                <button
+                  class="bg-game-secondary text-white px-3 py-1 rounded-full text-sm"
+                >
+                  ویرایش
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="p-3">نویسنده کتاب "جنگ و صلح" کیست؟</td>
+              <td class="p-3">ادبیات</td>
+              <td class="p-3">در انتظار تأیید</td>
+              <td class="p-3">
+                <button
+                  class="bg-game-accent text-white px-3 py-1 rounded-full text-sm"
+                >
+                  ویرایش
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer
+      class="bg-game-surface-light dark:bg-game-surface-dark text-game-text-light dark:text-game-text-dark py-6"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2023 پلتفرم بازی سوال و جواب. تمامی حقوق محفوظ است.</p>
+      </div>
+    </footer>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.documentElement.classList.contains("dark")
+        );
+      }
+
+      themeToggle.addEventListener("click", toggleDarkMode);
+      themeToggleMobile.addEventListener("click", toggleDarkMode);
+
+      // Check for saved theme preference or use system preference
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const savedTheme = localStorage.getItem("darkMode");
+
+      if (savedTheme === "true" || (savedTheme === null && prefersDarkMode)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </body>
+</html>
