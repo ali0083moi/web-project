@@ -175,122 +175,14 @@
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold text-game-primary mb-8">مدیریت سوالات</h1>
-
-      <div
-        class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 mb-8"
-      >
-        <h2 class="text-2xl font-bold text-game-secondary mb-4">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-game-primary">مدیریت سوالات</h1>
+        <button
+          id="openModalBtn"
+          class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+        >
           افزودن سوال جدید
-        </h2>
-        <form class="space-y-4">
-          <div>
-            <label for="question-text" class="block text-sm font-medium mb-1"
-              >متن سوال</label
-            >
-            <textarea
-              id="question-text"
-              name="question-text"
-              rows="3"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-              required
-            ></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">گزینه‌ها</label>
-            <div class="space-y-2">
-              <div class="flex gap-4">
-                <input
-                  type="text"
-                  name="option1"
-                  placeholder="گزینه 1"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                  required
-                />
-                <input
-                  type="text"
-                  name="option2"
-                  placeholder="گزینه 2"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                  required
-                />
-              </div>
-              <div class="flex gap-4">
-                <input
-                  type="text"
-                  name="option3"
-                  placeholder="گزینه 3"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                  required
-                />
-                <input
-                  type="text"
-                  name="option4"
-                  placeholder="گزینه 4"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <div class="flex w-full gap-4">
-            <div class="w-1/2">
-              <label for="category" class="block text-sm font-medium mb-1"
-                >دسته‌بندی</label
-              >
-              <select
-                id="category"
-                name="category"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                required
-              >
-                <option value="">انتخاب کنید</option>
-                <option value="history">تاریخ</option>
-                <option value="science">علوم</option>
-                <option value="literature">ادبیات</option>
-              </select>
-            </div>
-            <div class="w-1/2">
-              <label for="difficulty" class="block text-sm font-medium mb-1"
-                >سطح دشواری</label
-              >
-              <select
-                id="difficulty"
-                name="difficulty"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                required
-              >
-                <option value="">انتخاب کنید</option>
-                <option value="easy">آسان</option>
-                <option value="medium">متوسط</option>
-                <option value="hard">دشوار</option>
-              </select>
-            </div>
-            <div class="w-1/2">
-              <label for="correct-answer" class="block text-sm font-medium mb-1"
-                >پاسخ صحیح</label
-              >
-              <select
-                id="correct-answer"
-                name="correct-answer"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-                required
-              >
-                <option value="">انتخاب کنید</option>
-                <option value="1">گزینه 1</option>
-                <option value="2">گزینه 2</option>
-                <option value="3">گزینه 3</option>
-                <option value="4">گزینه 4</option>
-              </select>
-            </div>
-          </div>
-          <button
-            type="submit"
-            class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
-          >
-            افزودن سوال
-          </button>
-        </form>
+        </button>
       </div>
 
       <div
@@ -361,6 +253,162 @@
           </tbody>
         </table>
       </div>
+
+      <div
+        id="questionModal"
+        class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
+      >
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-3xl w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-game-secondary">
+              افزودن سوال جدید
+            </h2>
+            <button
+              id="closeModalBtn"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form class="space-y-4">
+            <div>
+              <label for="question-text" class="block text-sm font-medium mb-1"
+                >متن سوال</label
+              >
+              <textarea
+                id="question-text"
+                name="question-text"
+                rows="3"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">گزینه‌ها</label>
+              <div class="space-y-2">
+                <div class="flex gap-4">
+                  <input
+                    type="text"
+                    name="option1"
+                    placeholder="گزینه 1"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="option2"
+                    placeholder="گزینه 2"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                </div>
+                <div class="flex gap-4">
+                  <input
+                    type="text"
+                    name="option3"
+                    placeholder="گزینه 3"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="option4"
+                    placeholder="گزینه 4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex w-full gap-4">
+              <div class="w-1/3">
+                <label for="category" class="block text-sm font-medium mb-1"
+                  >دسته‌بندی</label
+                >
+                <select
+                  id="category"
+                  name="category"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                  required
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="history">تاریخ</option>
+                  <option value="science">علوم</option>
+                  <option value="literature">ادبیات</option>
+                </select>
+              </div>
+              <div class="w-1/3">
+                <label for="difficulty" class="block text-sm font-medium mb-1"
+                  >سطح دشواری</label
+                >
+                <select
+                  id="difficulty"
+                  name="difficulty"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                  required
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="easy">آسان</option>
+                  <option value="medium">متوسط</option>
+                  <option value="hard">دشوار</option>
+                </select>
+              </div>
+              <div class="w-1/3">
+                <label
+                  for="correct-answer"
+                  class="block text-sm font-medium mb-1"
+                  >پاسخ صحیح</label
+                >
+                <select
+                  id="correct-answer"
+                  name="correct-answer"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                  required
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="1">گزینه 1</option>
+                  <option value="2">گزینه 2</option>
+                  <option value="3">گزینه 3</option>
+                  <option value="4">گزینه 4</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 space-x-reverse pt-4">
+              <button
+                type="button"
+                class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+                onclick="closeModal()"
+              >
+                انصراف
+              </button>
+              <button
+                type="submit"
+                class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+              >
+                افزودن
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
 
     <footer
@@ -393,7 +441,6 @@
       themeToggle.addEventListener("click", toggleDarkMode);
       themeToggleMobile.addEventListener("click", toggleDarkMode);
 
-      // Check for saved theme preference or use system preference
       const prefersDarkMode = window.matchMedia(
         "(prefers-color-scheme: dark)"
       ).matches;
@@ -404,6 +451,57 @@
       } else {
         document.documentElement.classList.remove("dark");
       }
+    </script>
+
+    <style>
+      #questionModal {
+        backdrop-filter: blur(0px);
+        pointer-events: none;
+      }
+
+      #questionModal.modal-active {
+        opacity: 1;
+        z-index: 50;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+
+      #questionModal.modal-active > div {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+
+    <script>
+      const modal = document.getElementById("questionModal");
+      const openModalBtn = document.getElementById("openModalBtn");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+
+      function openModal() {
+        modal.classList.add("modal-active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        modal.classList.remove("modal-active");
+        document.body.style.overflow = "auto";
+      }
+
+      openModalBtn.addEventListener("click", openModal);
+      closeModalBtn.addEventListener("click", closeModal);
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("modal-active")) {
+          closeModal();
+        }
+      });
     </script>
   </body>
 </html>

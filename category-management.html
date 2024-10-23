@@ -51,6 +51,24 @@
       .dark .dark\:text-game-text-dark {
         color: #f3f4f6;
       }
+
+      #categoryModal {
+        backdrop-filter: blur(0px);
+        pointer-events: none;
+      }
+
+      #categoryModal.modal-active {
+        opacity: 1;
+        z-index: 50;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+
+      #categoryModal.modal-active > div {
+        opacity: 1;
+        transform: scale(1);
+      }
     </style>
   </head>
   <body
@@ -175,49 +193,16 @@
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold text-game-primary mb-8">
-        مدیریت دسته‌بندی‌ها
-      </h1>
-
-      <div
-        class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 mb-8"
-      >
-        <h2 class="text-2xl font-bold text-game-secondary mb-4">
-          افزودن دسته‌بندی جدید
-        </h2>
-        <form class="space-y-4">
-          <div>
-            <label for="category-name" class="block text-sm font-medium mb-1"
-              >نام دسته‌بندی</label
-            >
-            <input
-              type="text"
-              id="category-name"
-              name="category-name"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-              required
-            />
-          </div>
-          <div>
-            <label
-              for="category-description"
-              class="block text-sm font-medium mb-1"
-              >توضیحات</label
-            >
-            <textarea
-              id="category-description"
-              name="category-description"
-              rows="3"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
-          >
-            افزودن دسته‌بندی
-          </button>
-        </form>
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-game-primary">
+          مدیریت دسته‌بندی‌ها
+        </h1>
+        <button
+          id="openModalBtn"
+          class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+        >
+          اضافه کردن دسته‌بندی
+        </button>
       </div>
 
       <div
@@ -286,6 +271,81 @@
           </tbody>
         </table>
       </div>
+
+      <div
+        id="categoryModal"
+        class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
+      >
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-md w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-game-secondary">
+              افزودن دسته‌بندی جدید
+            </h2>
+            <button
+              id="closeModalBtn"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <form class="space-y-4">
+            <div>
+              <label for="category-name" class="block text-sm font-medium mb-1"
+                >نام دسته‌بندی</label
+              >
+              <input
+                type="text"
+                id="category-name"
+                name="category-name"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="category-description"
+                class="block text-sm font-medium mb-1"
+                >توضیحات</label
+              >
+              <textarea
+                id="category-description"
+                name="category-description"
+                rows="3"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+              ></textarea>
+            </div>
+            <div class="flex justify-end space-x-2 space-x-reverse">
+              <button
+                type="button"
+                class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+                onclick="closeModal()"
+              >
+                انصراف
+              </button>
+              <button
+                type="submit"
+                class="bg-game-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+              >
+                افزودن
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
 
     <footer
@@ -318,7 +378,6 @@
       themeToggle.addEventListener("click", toggleDarkMode);
       themeToggleMobile.addEventListener("click", toggleDarkMode);
 
-      // Check for saved theme preference or use system preference
       const prefersDarkMode = window.matchMedia(
         "(prefers-color-scheme: dark)"
       ).matches;
@@ -329,6 +388,35 @@
       } else {
         document.documentElement.classList.remove("dark");
       }
+
+      const modal = document.getElementById("categoryModal");
+      const openModalBtn = document.getElementById("openModalBtn");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+
+      function openModal() {
+        modal.classList.add("modal-active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        modal.classList.remove("modal-active");
+        document.body.style.overflow = "auto";
+      }
+
+      openModalBtn.addEventListener("click", openModal);
+      closeModalBtn.addEventListener("click", closeModal);
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("modal-active")) {
+          closeModal();
+        }
+      });
     </script>
   </body>
 </html>
