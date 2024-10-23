@@ -59,7 +59,32 @@
         max-height: 300px;
     }
     .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+
+    .modal:target .modal-content {
+        transform: scale(1);
     }
 </style>
 </head>
@@ -114,7 +139,7 @@
                     <input type="checkbox" class="form-checkbox text-game-primary">
                     <span class="mr-2 text-game-text-light dark:text-game-text-dark">مرا به خاطر بسپار</span>
                 </label>
-                <button type="button" id="forgot-password" class="text-game-secondary hover:text-game-primary transition-colors">فراموشی رمز عبور</button>
+                <a href="#password-recovery-modal" class="text-game-secondary hover:text-game-primary transition-colors">فراموشی رمز عبور</a>
             </div>
             <button type="submit" class="w-full bg-game-primary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
                 ورود
@@ -126,9 +151,8 @@
     </div>
 </main>
 
-<!-- Password Recovery Modal -->
-<div id="password-recovery-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg max-w-md w-full">
+<div id="password-recovery-modal" class="modal">
+    <div class="modal-content bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-2xl font-bold text-game-primary mb-4 text-center">بازیابی رمز عبور</h2>
         <p class="text-game-text-light dark:text-game-text-dark mb-4 text-center">
             لطفاً ایمیل خود را وارد کنید تا لینک بازیابی رمز عبور برای شما ارسال شود.
@@ -144,10 +168,10 @@
                 </button>
             </div>
         </form>
-        <div class="mt-4    text-center">
-            <button id="close-modal" class="text-game-secondary hover:text-game-primary transition-colors">
+        <div class="mt-4 text-center">
+            <a href="#" class="text-game-secondary hover:text-game-primary transition-colors">
                 بستن
-            </button>
+            </a>
         </div>
     </div>
 </div>
@@ -177,7 +201,6 @@
     themeToggle.addEventListener('click', toggleDarkMode);
     themeToggleMobile.addEventListener('click', toggleDarkMode);
 
-    // Check for saved theme preference or use system preference
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('darkMode');
 
@@ -186,35 +209,6 @@
     } else {
         document.documentElement.classList.remove('dark');
     }
-
-    // Password Recovery Modal
-    const forgotPasswordBtn = document.getElementById('forgot-password');
-    const passwordRecoveryModal = document.getElementById('password-recovery-modal');
-    const closeModalBtn = document.getElementById('close-modal');
-    const passwordRecoveryForm = document.getElementById('password-recovery-form');
-
-    forgotPasswordBtn.addEventListener('click', () => {
-        passwordRecoveryModal.classList.remove('hidden');
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-        passwordRecoveryModal.classList.add('hidden');
-    });
-
-    passwordRecoveryModal.addEventListener('click', (e) => {
-        if (e.target === passwordRecoveryModal) {
-            passwordRecoveryModal.classList.add('hidden');
-        }
-    });
-
-    passwordRecoveryForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const recoveryEmail = document.getElementById('recovery-email').value;
-        // Here you would typically send a request to your server to handle the password recovery process
-        alert(`لینک بازیابی رمز عبور به ${recoveryEmail} ارسال شد.`);
-        passwordRecoveryModal.classList.add('hidden');
-    });
 </script>
 </body>
 </html>
-
