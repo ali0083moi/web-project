@@ -4,6 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مدیریت سوالات - پلتفرم بازی سوال و جواب</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="مدیریت سوالات در پلتفرم بازی سوال و جواب. افزودن، ویرایش و حذف سوالات برای طراحان."
+    />
+    <meta
+      name="keywords"
+      content="مدیریت سوالات, طراحی سوال, بازی سوال و جواب, کوئیز"
+    />
+    <meta name="author" content="تیم توسعه پلتفرم بازی سوال و جواب" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://www.example.com/question-management.html"
+    />
+    <meta
+      property="og:title"
+      content="مدیریت سوالات - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="og:description"
+      content="مدیریت سوالات در پلتفرم بازی سوال و جواب. افزودن، ویرایش و حذف سوالات برای طراحان."
+    />
+    <meta
+      property="og:image"
+      content="https://www.example.com/question-management-og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://www.example.com/question-management.html"
+    />
+    <meta
+      property="twitter:title"
+      content="مدیریت سوالات - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="twitter:description"
+      content="مدیریت سوالات در پلتفرم بازی سوال و جواب. افزودن، ویرایش و حذف سوالات برای طراحان."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.example.com/question-management-twitter-image.jpg"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -185,7 +238,7 @@
         </button>
       </div>
 
-      <div
+      <section
         class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
       >
         <h2 class="text-2xl font-bold text-game-accent mb-4">لیست سوالات</h2>
@@ -285,7 +338,7 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </section>
 
       <div
         id="questionModal"
@@ -462,6 +515,60 @@
           </form>
         </div>
       </div>
+
+      <div
+        id="deleteModal"
+        class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
+      >
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-md w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-red-500">حذف سوال</h2>
+            <button
+              id="closeDeleteModalBtn"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-lg mb-2">آیا از حذف این سوال اطمینان دارید؟</p>
+            <p
+              id="deleteQuestionText"
+              class="text-gray-600 dark:text-gray-400"
+            ></p>
+          </div>
+
+          <div class="flex justify-end space-x-2 space-x-reverse">
+            <button
+              id="cancelDeleteBtn"
+              class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              انصراف
+            </button>
+            <button
+              id="confirmDeleteBtn"
+              class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              حذف
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer
@@ -626,60 +733,6 @@
         }
       });
     </script>
-
-    <div
-      id="deleteModal"
-      class="fixed inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0 -z-10 flex items-center justify-center"
-    >
-      <div
-        class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6 max-w-md w-full mx-4 transition-all duration-300 ease-in-out scale-95 opacity-0 transform"
-      >
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold text-red-500">حذف سوال</h2>
-          <button
-            id="closeDeleteModalBtn"
-            class="text-gray-500 hover:text-gray-700"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div class="mb-6">
-          <p class="text-lg mb-2">آیا از حذف این سوال اطمینان دارید؟</p>
-          <p
-            id="deleteQuestionText"
-            class="text-gray-600 dark:text-gray-400"
-          ></p>
-        </div>
-
-        <div class="flex justify-end space-x-2 space-x-reverse">
-          <button
-            id="cancelDeleteBtn"
-            class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
-          >
-            انصراف
-          </button>
-          <button
-            id="confirmDeleteBtn"
-            class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
-          >
-            حذف
-          </button>
-        </div>
-      </div>
-    </div>
 
     <style>
       #deleteModal {

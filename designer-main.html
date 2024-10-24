@@ -4,6 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>صفحه اصلی طراح - پلتفرم بازی سوال و جواب</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="صفحه اصلی طراح سوال در پلتفرم بازی سوال و جواب. مدیریت سوالات، مشاهده آمار و فعالیت‌های اخیر."
+    />
+    <meta
+      name="keywords"
+      content="طراح سوال, مدیریت سوالات, بازی سوال و جواب, داشبورد طراح"
+    />
+    <meta name="author" content="تیم توسعه پلتفرم بازی سوال و جواب" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://www.example.com/designer-main.html"
+    />
+    <meta
+      property="og:title"
+      content="صفحه اصلی طراح - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="og:description"
+      content="صفحه اصلی طراح سوال در پلتفرم بازی سوال و جواب. مدیریت سوالات، مشاهده آمار و فعالیت‌های اخیر."
+    />
+    <meta
+      property="og:image"
+      content="https://www.example.com/designer-main-og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://www.example.com/designer-main.html"
+    />
+    <meta
+      property="twitter:title"
+      content="صفحه اصلی طراح - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="twitter:description"
+      content="صفحه اصلی طراح سوال در پلتفرم بازی سوال و جواب. مدیریت سوالات، مشاهده آمار و فعالیت‌های اخیر."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.example.com/designer-main-twitter-image.jpg"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -178,7 +231,7 @@
       <h1 class="text-4xl font-bold text-game-primary mb-8">سارا رضایی</h1>
 
       <div class="grid md:grid-cols-2 gap-8">
-        <div
+        <section
           class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
         >
           <h2 class="text-2xl font-bold text-game-secondary mb-4">آمار کلی</h2>
@@ -190,9 +243,9 @@
             <li>دنبال کنندگان: <span class="font-bold">1000</span></li>
             <li>دنبال شده: <span class="font-bold">100</span></li>
           </ul>
-        </div>
+        </section>
 
-        <div
+        <section
           class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
         >
           <h2 class="text-2xl font-bold text-game-accent mb-4">
@@ -203,10 +256,10 @@
             <li>سوال شما تأیید شد: "بزرگترین قاره جهان کدام است؟"</li>
             <li>نظر جدید برای سوال شما: "سوال بسیار خوبی بود!"</li>
           </ul>
-        </div>
+        </section>
       </div>
 
-      <div class="mt-8">
+      <section class="mt-8">
         <h2 class="text-2xl font-bold text-game-primary mb-4">سوالات اخیر</h2>
         <table
           class="w-full bg-game-surface-light dark:bg-game-surface-dark rounded-lg overflow-hidden"
@@ -264,7 +317,7 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </section>
     </main>
 
     <footer

@@ -4,6 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>صفحه اصلی بازیکن - پلتفرم بازی سوال و جواب</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="صفحه اصلی بازیکن در پلتفرم بازی سوال و جواب. مشاهده آمار، دستاوردها و بازی‌های اخیر."
+    />
+    <meta
+      name="keywords"
+      content="بازی سوال و جواب, داشبورد بازیکن, آمار بازی, دستاوردها"
+    />
+    <meta name="author" content="تیم توسعه پلتفرم بازی سوال و جواب" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://www.example.com/player-main.html"
+    />
+    <meta
+      property="og:title"
+      content="صفحه اصلی بازیکن - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="og:description"
+      content="صفحه اصلی بازیکن در پلتفرم بازی سوال و جواب. مشاهده آمار، دستاوردها و بازی‌های اخیر."
+    />
+    <meta
+      property="og:image"
+      content="https://www.example.com/player-main-og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://www.example.com/player-main.html"
+    />
+    <meta
+      property="twitter:title"
+      content="صفحه اصلی بازیکن - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="twitter:description"
+      content="صفحه اصلی بازیکن در پلتفرم بازی سوال و جواب. مشاهده آمار، دستاوردها و بازی‌های اخیر."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.example.com/player-main-twitter-image.jpg"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -178,7 +231,7 @@
       <h1 class="text-4xl font-bold text-game-primary mb-8">سارا رضایی</h1>
 
       <div class="grid md:grid-cols-2 gap-8">
-        <div
+        <section
           class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
         >
           <h2 class="text-2xl font-bold text-game-secondary mb-4">آمار کلی</h2>
@@ -190,9 +243,16 @@
             <li>دنبال کنندگان: <span class="font-bold">400</span></li>
             <li>دنبال شده: <span class="font-bold">200</span></li>
           </ul>
-        </div>
+          <!-- Added new button -->
+          <a
+            href="users.html"
+            class="mt-4 inline-block bg-game-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
+          >
+            یافتن و دنبال کردن دوستان جدید
+          </a>
+        </section>
 
-        <div
+        <section
           class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-6"
         >
           <h2 class="text-2xl font-bold text-game-accent mb-4">
@@ -203,10 +263,10 @@
             <li>پاسخ صحیح به 10 سوال متوالی</li>
             <li>ارتقا به سطح "دانشمند جوان"</li>
           </ul>
-        </div>
+        </section>
       </div>
 
-      <div class="mt-8">
+      <section class="mt-8">
         <h2 class="text-2xl font-bold text-game-primary mb-4">بازی‌های اخیر</h2>
         <table
           class="w-full bg-game-surface-light dark:bg-game-surface-dark rounded-lg overflow-hidden"
@@ -234,7 +294,7 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </section>
     </main>
 
     <footer

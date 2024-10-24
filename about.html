@@ -4,6 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>درباره ما - پلتفرم بازی سوال و جواب</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="اطلاعات درباره پروژه بازی سوال و جواب، ویژگی‌های اصلی، تکنولوژی‌های مورد استفاده و اعضای تیم توسعه دهنده."
+    />
+    <meta
+      name="keywords"
+      content="درباره ما, بازی سوال و جواب, ویژگی‌های پلتفرم, تکنولوژی‌های وب, تیم توسعه"
+    />
+    <meta name="author" content="تیم توسعه پلتفرم بازی سوال و جواب" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.example.com/about.html" />
+    <meta property="og:title" content="درباره ما - پلتفرم بازی سوال و جواب" />
+    <meta
+      property="og:description"
+      content="اطلاعات درباره پروژه بازی سوال و جواب، ویژگی‌های اصلی، تکنولوژی‌های مورد استفاده و اعضای تیم توسعه دهنده."
+    />
+    <meta
+      property="og:image"
+      content="https://www.example.com/about-og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.example.com/about.html" />
+    <meta
+      property="twitter:title"
+      content="درباره ما - پلتفرم بازی سوال و جواب"
+    />
+    <meta
+      property="twitter:description"
+      content="اطلاعات درباره پروژه بازی سوال و جواب، ویژگی‌های اصلی، تکنولوژی‌های مورد استفاده و اعضای تیم توسعه دهنده."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.example.com/about-twitter-image.jpg"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -86,14 +130,14 @@
             <li>
               <a
                 href="index.html"
-                class="text-game-primary transition-colors duration-300"
+                class="hover:text-game-primary transition-colors duration-300"
                 >صفحه اصلی</a
               >
             </li>
             <li>
               <a
                 href="about.html"
-                class="hover:text-game-primary transition-colors duration-300"
+                class="text-game-primary transition-colors duration-300"
                 >درباره ما</a
               >
             </li>
@@ -165,66 +209,68 @@
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8">
-      <section class="text-center mb-12">
+      <article>
         <h1 class="text-4xl font-bold text-game-primary mb-4">
           درباره پروژه بازی سوال و جواب
         </h1>
         <p class="text-xl mb-8">
           پلتفرم آنلاین برای بازی سوال و جواب با قابلیت‌های متنوع و جذاب
         </p>
-      </section>
 
-      <section
-        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-12"
-      >
-        <h2 class="text-2xl font-bold text-game-secondary mb-4">
-          ویژگی‌های اصلی
-        </h2>
-        <ul class="list-disc list-inside space-y-2">
-          <li>ثبت نام و ورود کاربران</li>
-          <li>پنل مدیریت برای طراحان سوال</li>
-          <li>امکان ایجاد، ویرایش و حذف سوالات</li>
-          <li>دسته‌بندی سوالات</li>
-          <li>سیستم امتیازدهی و رتبه‌بندی</li>
-          <li>نمایش جدول امتیازات (Scoreboard)</li>
-          <li>قابلیت بازی تکی و چند نفره</li>
-          <li>طراحی واکنش‌گرا (Responsive) برای استفاده در دستگاه‌های مختلف</li>
-        </ul>
-      </section>
+        <section
+          class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-12"
+        >
+          <h2 class="text-2xl font-bold text-game-secondary mb-4">
+            ویژگی‌های اصلی
+          </h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>ثبت نام و ورود کاربران</li>
+            <li>پنل مدیریت برای طراحان سوال</li>
+            <li>امکان ایجاد، ویرایش و حذف سوالات</li>
+            <li>دسته‌بندی سوالات</li>
+            <li>سیستم امتیازدهی و رتبه‌بندی</li>
+            <li>نمایش جدول امتیازات (Scoreboard)</li>
+            <li>قابلیت بازی تکی و چند نفره</li>
+            <li>
+              طراحی واکنش‌گرا (Responsive) برای استفاده در دستگاه‌های مختلف
+            </li>
+          </ul>
+        </section>
 
-      <section
-        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-12"
-      >
-        <h2 class="text-2xl font-bold text-game-secondary mb-4">
-          تکنولوژی‌های مورد استفاده
-        </h2>
-        <ul class="list-disc list-inside space-y-2">
-          <li>HTML5</li>
-          <li>CSS3</li>
-          <li>JavaScript</li>
-          <li>Tailwind CSS</li>
-        </ul>
-      </section>
+        <section
+          class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg mb-12"
+        >
+          <h2 class="text-2xl font-bold text-game-secondary mb-4">
+            تکنولوژی‌های مورد استفاده
+          </h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>Tailwind CSS</li>
+          </ul>
+        </section>
 
-      <section
-        class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg"
-      >
-        <h2 class="text-2xl font-bold text-game-secondary mb-4">اعضای تیم</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-          <div>
-            <h3 class="text-xl font-bold mb-2">علی مقدسی</h3>
-            <p>شماره دانشجویی: 402106542</p>
+        <section
+          class="bg-game-surface-light dark:bg-game-surface-dark p-8 rounded-lg shadow-lg"
+        >
+          <h2 class="text-2xl font-bold text-game-secondary mb-4">اعضای تیم</h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="text-xl font-bold mb-2">علی مقدسی</h3>
+              <p>شماره دانشجویی: 402106542</p>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2">مائده حیدری</h3>
+              <p>شماره دانشجویی: 400104918</p>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2">علیرضا میرشفیعیان</h3>
+              <p>شماره دانشجویی: 401106628</p>
+            </div>
           </div>
-          <div>
-            <h3 class="text-xl font-bold mb-2">مائده حیدری</h3>
-            <p>شماره دانشجویی: 400104918</p>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-2">علیرضا میرشفیعیان</h3>
-            <p>شماره دانشجویی: 401106628</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      </article>
     </main>
 
     <footer
