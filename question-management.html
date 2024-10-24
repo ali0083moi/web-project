@@ -382,7 +382,7 @@
                   required
                 >
                   <option value="">انتخاب کنید</option>
-                  <option value="geography">جغرافیا</option>
+                  <option value="geography">جغرافا</option>
                   <option value="science">علوم</option>
                   <option value="literature">ادبیات</option>
                 </select>
@@ -422,6 +422,26 @@
                   <option value="4">گزینه 4</option>
                 </select>
               </div>
+            </div>
+
+            <!-- Add this new div after the flex container above -->
+            <div class="w-full mt-4">
+              <label
+                for="similar-question"
+                class="block text-sm font-medium mb-1"
+                >سوال مشابه</label
+              >
+              <select
+                id="similar-question"
+                name="similar-question"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-game-primary dark:bg-game-background-dark dark:border-gray-600"
+              >
+                <option value="">انتخاب کنید</option>
+                <option value="1">پایتخت ایران کدام شهر است؟</option>
+                <option value="2">نویسنده کتاب "جنگ و صلح" کیست؟</option>
+                <option value="3">فرمول شیمیایی آب چیست؟</option>
+                <!-- More questions can be dynamically loaded here -->
+              </select>
             </div>
 
             <div class="flex justify-end space-x-2 space-x-reverse pt-4">
@@ -539,6 +559,8 @@
         document.getElementById("category").value = data.category;
         document.getElementById("difficulty").value = data.difficulty;
         document.getElementById("correct-answer").value = data.correct;
+        document.getElementById("similar-question").value =
+          data.similarQuestion || "";
       }
 
       function closeModal() {
@@ -559,6 +581,7 @@
             option3: button.dataset.option3,
             option4: button.dataset.option4,
             correct: button.dataset.correct,
+            similarQuestion: document.getElementById("similar-question").value,
           };
           openModal(true, data);
         });
@@ -576,6 +599,7 @@
           option3: document.querySelector('input[name="option3"]').value,
           option4: document.querySelector('input[name="option4"]').value,
           correct: document.getElementById("correct-answer").value,
+          similarQuestion: document.getElementById("similar-question").value,
         };
 
         if (isEditing) {
