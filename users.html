@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>کاربران - پلتفرم بازی سوال و جواب</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              game: {
+                primary: "#6366F1",
+                secondary: "#10B981",
+                accent: "#F59E0B",
+                background: {
+                  dark: "#111827",
+                },
+                surface: {
+                  dark: "#1F2937",
+                },
+                text: {
+                  dark: "#F3F4F6",
+                },
+              },
+            },
+            fontFamily: {
+              game: ["Vazirmatn", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      .dark .dark\:bg-game-background-dark {
+        background-color: #111827;
+      }
+      .dark .dark\:bg-game-surface-dark {
+        background-color: #1f2937;
+      }
+      .dark .dark\:text-game-text-dark {
+        color: #f3f4f6;
+      }
+      body,
+      button,
+      a,
+      input,
+      select,
+      .dark\:bg-game-surface-dark {
+        transition: background-color 0.3s ease, color 0.3s ease,
+          border-color 0.3s ease;
+      }
+      #mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      #mobile-menu.open {
+        max-height: 300px;
+      }
+    </style>
+  </head>
+  <body
+    class="dark:bg-game-background-dark dark:text-game-text-dark font-game min-h-screen flex flex-col"
+  >
+    <header class="dark:bg-game-surface-dark shadow-lg">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a href="#" class="text-2xl font-bold text-game-primary"
+          >پلتفرم بازی سوال و جواب</a
+        >
+        <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
+          <ul class="flex space-x-6 space-x-reverse">
+            <li>
+              <a
+                href="player-main.html"
+                class="hover:text-game-primary transition-colors duration-300"
+                >داشبورد</a
+              >
+            </li>
+            <li>
+              <a
+                href="questions.html"
+                class="hover:text-game-primary transition-colors duration-300"
+                >بازی جدید</a
+              >
+            </li>
+            <li>
+              <a
+                href="scoreboard.html"
+                class="hover:text-game-primary transition-colors duration-300"
+                >جدول امتیازات</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-game-primary transition-colors duration-300"
+                >خروج</a
+              >
+            </li>
+          </ul>
+          <button
+            id="theme-toggle"
+            class="p-2 rounded-full bg-game-surface-dark text-game-text-dark transition-colors duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
+            </svg>
+          </button>
+        </nav>
+        <button
+          class="md:hidden dark:text-game-text-dark hover:text-game-primary transition-colors duration-300"
+          id="menu-toggle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="md:hidden" id="mobile-menu">
+        <ul class="px-4 py-2 space-y-2">
+          <li>
+            <a
+              href="player-main.html"
+              class="block hover:text-game-primary transition-colors duration-300"
+              >داشبورد</a
+            >
+          </li>
+          <li>
+            <a
+              href="questions.html"
+              class="block hover:text-game-primary transition-colors duration-300"
+              >بازی جدید</a
+            >
+          </li>
+          <li>
+            <a
+              href="scoreboard.html"
+              class="block hover:text-game-primary transition-colors duration-300"
+              >جدول امتیازات</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html"
+              class="block hover:text-game-primary transition-colors duration-300"
+              >خروج</a
+            >
+          </li>
+        </ul>
+        <button
+          id="theme-toggle-mobile"
+          class="w-full text-right px-4 py-2 hover:text-game-primary transition-colors duration-300"
+        >
+          تغییر حالت روشن/تاریک
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold text-game-primary mb-6">کاربران</h1>
+
+      <section
+        id="users-list"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Users will be dynamically added here -->
+      </section>
+    </main>
+
+    <footer
+      class="dark:bg-game-surface-dark dark:text-game-text-dark py-6"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2023 پلتفرم بازی سوال و جواب. تمامی حقوق محفوظ است.</p>
+      </div>
+    </footer>
+
+    <script>
+      const users = [
+        {
+          id: 1,
+          name: "سارا رضایی",
+          username: "sara_r",
+          role: "بازیکن",
+          score: 1500,
+        },
+        {
+          id: 2,
+          name: "مریم احمدی",
+          username: "maryam_a",
+          role: "طراح سوال",
+          score: 2000,
+        },
+        {
+          id: 3,
+          name: "رضا محمدی",
+          username: "reza_m",
+          role: "بازیکن",
+          score: 1800,
+        },
+        {
+          id: 4,
+          name: "سارا کریمی",
+          username: "sara_k",
+          role: "طراح سوال",
+          score: 2200,
+        },
+        {
+          id: 5,
+          name: "امیر حسینی",
+          username: "amir_h",
+          role: "بازیکن",
+          score: 1600,
+        },
+      ];
+
+      const usersList = document.getElementById("users-list");
+      const userSearch = document.getElementById("user-search");
+
+      function renderUsers(filteredUsers) {
+        usersList.innerHTML = "";
+        filteredUsers.forEach((user) => {
+          const userElement = document.createElement("div");
+          userElement.className =
+            "dark:bg-game-surface-dark p-4 rounded-lg shadow";
+          userElement.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">${user.name}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">نام کاربری: ${user.username}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">نقش: ${user.role}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">امتیاز: ${user.score}</p>
+                    <button class="mt-2 bg-game-primary hover:bg-opacity-90 text-white font-bold py-1 px-3 rounded-md transition-colors duration-300" onclick="followUser(${user.id})">
+                        دنبال کردن
+                    </button>
+                    <button class="mt-2 bg-game-secondary hover:bg-opacity-90 text-white font-bold py-1 px-3 rounded-md transition-colors duration-300" onclick="viewProfile(${user.id})">
+                        مشاهده پروفایل
+                    </button>
+                `;
+          usersList.appendChild(userElement);
+        });
+      }
+
+      renderUsers(users);
+    </script>
+  </body>
+</html>
