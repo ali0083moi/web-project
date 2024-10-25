@@ -222,6 +222,38 @@
     </footer>
 
     <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.documentElement.classList.contains("dark")
+        );
+      }
+
+      themeToggle.addEventListener("click", toggleDarkMode);
+      themeToggleMobile.addEventListener("click", toggleDarkMode);
+
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const savedTheme = localStorage.getItem("darkMode");
+
+      if (savedTheme === "true" || (savedTheme === null && prefersDarkMode)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
       const users = [
         {
           id: 1,
@@ -284,6 +316,26 @@
           usersList.appendChild(userElement);
         });
       }
+
+      function filterUsers() {
+        const searchTerm = userSearch.value.toLowerCase();
+        const filteredUsers = users.filter(
+          (user) =>
+            user.name.toLowerCase().includes(searchTerm) ||
+            user.username.toLowerCase().includes(searchTerm)
+        );
+        renderUsers(filteredUsers);
+      }
+
+      function followUser(id) {
+        alert(`کاربر با شناسه ${id} دنبال شد.`);
+      }
+
+      function viewProfile(id) {
+        alert(`مشاهده پروفایل کاربر با شناسه ${id}`);
+      }
+
+      userSearch.addEventListener("input", filterUsers);
 
       renderUsers(users);
     </script>

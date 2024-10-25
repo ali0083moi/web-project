@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مشاهده سوالات - پلتفرم بازی سوال و جواب</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              game: {
+                primary: "#6366F1",
+                secondary: "#10B981",
+                accent: "#F59E0B",
+                background: {
+                  light: "#F3F4F6",
+                  dark: "#111827",
+                },
+                surface: {
+                  light: "#FFFFFF",
+                  dark: "#1F2937",
+                },
+                text: {
+                  light: "#1F2937",
+                  dark: "#F3F4F6",
+                },
+              },
+            },
+            fontFamily: {
+              game: ["Vazirmatn", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      .dark .dark\:bg-game-background-dark {
+        background-color: #111827;
+      }
+      .dark .dark\:bg-game-surface-dark {
+        background-color: #1f2937;
+      }
+      .dark .dark\:text-game-text-dark {
+        color: #f3f4f6;
+      }
+      body,
+      button,
+      a,
+      input,
+      select,
+      .bg-game-surface-light,
+      .dark\:bg-game-surface-dark {
+        transition: background-color 0.3s ease, color 0.3s ease,
+          border-color 0.3s ease;
+      }
+      #mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      #mobile-menu.open {
+        max-height: 300px;
+      }
+      .modal {
+        transition: opacity 0.3s ease;
+      }
+      .answer-option {
+        transition: all 0.3s ease;
+      }
+      .answer-option:hover {
+        transform: translateY(-2px);
+      }
+      @keyframes countdown {
+        from {
+          transform: scale(1.2);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .countdown-timer {
+        animation: countdown 1s ease-in-out infinite;
+      }
+
+      #success-modal .transform,
+      #error-modal .transform {
+        transition: transform 0.3s ease-out;
+      }
+
+      #success-modal.show .transform,
+      #error-modal.show .transform {
+        transform: scale(1);
+      }
+
+      #success-modal:not(.show) .transform,
+      #error-modal:not(.show) .transform {
+        transform: scale(0.9);
+      }
+
+      .scale-102 {
+        transform: scale(1.02);
+      }
+
+      .answer-option {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .answer-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: currentColor;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .answer-option:hover::before {
+        opacity: 0.05;
+      }
+
+      .answer-option:active {
+        transform: scale(0.98);
+      }
+
+      .answer-option.correct {
+        animation: correct-answer 0.5s ease forwards;
+      }
+
+      .answer-option.wrong {
+        animation: wrong-answer 0.5s ease forwards;
+      }
+
+      @keyframes correct-answer {
+        from {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes wrong-answer {
+        from {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-8px);
+        }
+        75% {
+          transform: translateX(8px);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      #quiz-modal {
+        backdrop-filter: blur(0px);
+        pointer-events: none;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #quiz-modal.modal-active {
+        opacity: 1;
+        z-index: 50;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+
+      #quiz-modal > div {
+        transform: scale(0.95);
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+        max-width: 48rem;
+        margin: 1rem;
+      }
+
+      #quiz-modal.modal-active > div {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      #quiz-modal.closing {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+
+      #quiz-modal.closing > div {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      .answer-option {
+        transform: translateY(0);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      #history-modal {
+        backdrop-filter: blur(0px);
+        pointer-events: none;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #history-modal.modal-active {
+        opacity: 1;
+        z-index: 50;
+        backdrop-filter: blur(4px);
+        pointer-events: auto;
+      }
+
+      #history-modal > div {
+        transform: scale(0.95);
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+        max-width: 48rem;
+        margin: 1rem;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: scale(0.95);
+      }
+
+      #history-modal.modal-active > div {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      #history-modal.closing {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+
+      #history-modal.closing > div {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      @media (max-width: 640px) {
+        .answer-option {
+          padding: 0.75rem 1rem;
+        }
+
+        #modal-question {
+          font-size: 1.25rem;
+          line-height: 1.75rem;
+        }
+
+        .overflow-x-auto {
+          margin: 0 -1rem;
+          padding: 0 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-game-background-light dark:bg-game-background-dark text-game-text-light dark:text-game-text-dark font-game min-h-screen flex flex-col"
+  >
+    <header class="bg-game-surface-light dark:bg-game-surface-dark shadow-lg">
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-game-primary"
+          >پلتفرم بازی سوال و جواب</a
+        >
+        <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
+          <ul class="flex space-x-6 space-x-reverse">
+            <li>
+              <a
+                href="player-main.html"
+                class="hover:text-game-primary transition-colors"
+                >داشبورد</a
+              >
+            </li>
+            <li>
+              <a
+                href="questions.html"
+                class="text-game-primary transition-colors"
+                >بازی جدید</a
+              >
+            </li>
+            <li>
+              <a
+                href="scoreboard.html"
+                class="hover:text-game-primary transition-colors"
+                >جدول امتیازات</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-game-primary transition-colors"
+                >خروج</a
+              >
+            </li>
+          </ul>
+          <button
+            id="theme-toggle"
+            class="p-2 rounded-full bg-game-surface-dark dark:bg-game-surface-light text-game-text-dark dark:text-game-text-light"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
+            </svg>
+          </button>
+        </nav>
+        <button
+          class="md:hidden text-game-text-light dark:text-game-text-dark hover:text-game-primary transition-colors"
+          id="menu-toggle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <ul class="px-4 py-2 space-y-2">
+          <li>
+            <a
+              href="player-main.html"
+              class="block hover:text-game-primary transition-colors"
+              >داشبورد</a
+            >
+          </li>
+          <li>
+            <a
+              href="questions.html"
+              class="block hover:text-game-primary transition-colors"
+              >بازی جدید</a
+            >
+          </li>
+          <li>
+            <a
+              href="scoreboard.html"
+              class="block hover:text-game-primary transition-colors"
+              >جدول امتیازات</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html"
+              class="block hover:text-game-primary transition-colors"
+              >خروج</a
+            >
+          </li>
+        </ul>
+        <button
+          id="theme-toggle-mobile"
+          class="w-full text-right px-4 py-2 hover:text-game-primary transition-colors"
+        >
+          تغییر حالت روشن/تاریک
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <h1 class="text-3xl font-bold text-game-primary mb-6">مشاهده سوالات</h1>
+
+      <section class="mb-6 flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <select
+          id="category-filter"
+          class="w-full sm:w-auto bg-game-surface-light dark:bg-game-surface-dark border border-game-primary rounded-md p-2"
+        >
+          <option value="">همه دسته‌ها</option>
+          <option value="جغرافیا">جغرافیا</option>
+          <option value="کامپیوتر">کامپیوتر</option>
+          <option value="نجوم">نجوم</option>
+          <option value="ادبیات">ادبیات</option>
+          <option value="شیمی">شیمی</option>
+        </select>
+        <select
+          id="difficulty-filter"
+          class="w-full sm:w-auto bg-game-surface-light dark:bg-game-surface-dark border border-game-primary rounded-md p-2"
+        >
+          <option value="">همه سطوح دشواری</option>
+          <option value="آسان">آسان</option>
+          <option value="متوسط">متوسط</option>
+          <option value="دشوار">دشوار</option>
+        </select>
+        <button
+          id="random-question"
+          class="w-full sm:w-auto bg-game-accent hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+        >
+          سوال تصادفی
+        </button>
+        <button
+          id="show-history"
+          class="w-full sm:w-auto bg-game-secondary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+        >
+          سوالات پاسخ داده شده
+        </button>
+      </section>
+    </main>
+
+    <footer
+      class="bg-game-surface-light dark:bg-game-surface-dark text-game-text-light dark:text-game-text-dark py-6"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2023 پلتفرم بازی سوال و جواب. تمامی حقوق محفوظ است.</p>
+      </div>
+    </footer>
+
+    <div
+      id="quiz-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center modal"
+    >
+      <div
+        class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-4 sm:p-8 max-w-3xl w-[95%] mx-2"
+      >
+        <div id="quiz-container">
+          <h2
+            id="modal-question"
+            class="text-2xl font-bold mb-6 text-center"
+          ></h2>
+          <div
+            id="modal-answers"
+            class="grid grid-cols-1 gap-2 sm:gap-4 mb-6"
+          ></div>
+          <div class="flex justify-between items-center mb-4">
+            <p id="modal-question-info" class="text-sm"></p>
+            <p id="modal-score" class="text-sm font-semibold"></p>
+          </div>
+          <div class="flex justify-end">
+            <button
+              id="modal-close"
+              class="bg-game-primary hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300"
+            >
+              بستن
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
