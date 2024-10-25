@@ -438,6 +438,55 @@
           سوالات پاسخ داده شده
         </button>
       </section>
+
+      <section id="questions-list" class="space-y-4">
+        <!-- Questions will be dynamically added here -->
+      </section>
+
+      <div
+        id="history-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 px-4 hidden"
+      >
+        <div
+          class="bg-game-surface-light dark:bg-game-surface-dark rounded-lg shadow-lg p-4 sm:p-8 mx-2 sm:mx-4 max-w-4xl w-[95%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">سوالات پاسخ داده شده</h2>
+            <button
+              id="close-history"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="w-full min-w-[600px]">
+              <thead class="border-b border-gray-200 dark:border-gray-700">
+                <tr>
+                  <th class="text-right py-3 px-4">سوال</th>
+                  <th class="text-right py-3 px-4">پاسخ صحیح</th>
+                  <th class="text-right py-3 px-4">وضعیت پاسخ</th>
+                  <th class="text-right py-3 px-4">دسته‌بندی</th>
+                  <th class="text-right py-3 px-4">سطح دشواری</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer
@@ -479,5 +528,390 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.documentElement.classList.contains("dark")
+        );
+      }
+
+      themeToggle.addEventListener("click", toggleDarkMode);
+      themeToggleMobile.addEventListener("click", toggleDarkMode);
+
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const savedTheme = localStorage.getItem("darkMode");
+
+      if (savedTheme === "true" || (savedTheme === null && prefersDarkMode)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      const questions = [
+        {
+          id: 1,
+          question: "پایتخت ایران کدام شهر است؟",
+          answers: ["تهران", "اصفهان", "شیراز", "تبریز"],
+          correct: 0,
+          category: "جغرافیا",
+          difficulty: "آسان",
+        },
+        {
+          id: 2,
+          question: "کدام یک از موارد زیر یک زبان برنامه‌نویسی نیست؟",
+          answers: ["HTML", "Python", "JavaScript", "Java"],
+          correct: 0,
+          category: "کامپیوتر",
+          difficulty: "متوسط",
+        },
+        {
+          id: 3,
+          question: "برگترین سیاره منظومه شمسی کدام است؟",
+          answers: ["زمین", "مریخ", "مشتری", "زحل"],
+          correct: 2,
+          category: "نجوم",
+          difficulty: "آسان",
+        },
+        {
+          id: 4,
+          question: "نویسنده کتاب 'شاهنامه' کیست؟",
+          answers: ["سعدی", "حافظ", "فردوسی", "مولوی"],
+          correct: 2,
+          category: "ادبیات",
+          difficulty: "متوط",
+        },
+        {
+          id: 5,
+          question: "کدام عنصر بیشترین فراوانی را در پوسته زمین دارد؟",
+          answers: ["آهن", "اکسیژن", "سیلیکون", "آلومینیوم"],
+          correct: 1,
+          category: "شیمی",
+          difficulty: "دشوار",
+        },
+      ];
+
+      const questionsList = document.getElementById("questions-list");
+      const categoryFilter = document.getElementById("category-filter");
+      const difficultyFilter = document.getElementById("difficulty-filter");
+      const randomQuestionBtn = document.getElementById("random-question");
+
+      let answeredQuestions = new Set();
+      let userAnswers = new Map();
+
+      function renderQuestions(filteredQuestions) {
+        questionsList.innerHTML = "";
+        filteredQuestions
+          .filter((q) => !answeredQuestions.has(q.id))
+          .forEach((q) => {
+            const questionElement = document.createElement("div");
+            questionElement.className =
+              "bg-game-surface-light dark:bg-game-surface-dark p-4 rounded-lg shadow";
+            questionElement.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">${q.question}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">دسته: ${q.category} | سطح دشواری: ${q.difficulty}</p>
+                    <button class="mt-2 bg-game-primary hover:bg-opacity-90 text-white font-bold py-1 px-3 rounded-md transition-colors duration-300" onclick="openQuestion(${q.id})">
+                        پاسخ به سوال
+                    </button>
+                `;
+            questionsList.appendChild(questionElement);
+          });
+      }
+
+      function filterQuestions() {
+        const categoryValue = categoryFilter.value;
+        const difficultyValue = difficultyFilter.value;
+        const filteredQuestions = questions.filter(
+          (q) =>
+            (!categoryValue || q.category === categoryValue) &&
+            (!difficultyValue || q.difficulty === difficultyValue)
+        );
+        renderQuestions(filteredQuestions);
+      }
+
+      function openQuestion(id) {
+        const question = questions.find((q) => q.id === id);
+        if (question) {
+          showQuizModal(question);
+        }
+      }
+
+      function showRandomQuestion() {
+        const unansweredQuestions = questions.filter(
+          (q) => !answeredQuestions.has(q.id)
+        );
+        if (unansweredQuestions.length === 0) {
+          alert("همه سوالات پاسخ داده شده‌اند!");
+          return;
+        }
+        const randomQuestion =
+          unansweredQuestions[
+            Math.floor(Math.random() * unansweredQuestions.length)
+          ];
+        showQuizModal(randomQuestion);
+      }
+
+      categoryFilter.addEventListener("change", filterQuestions);
+
+      difficultyFilter.addEventListener("change", filterQuestions);
+      randomQuestionBtn.addEventListener("click", showRandomQuestion);
+
+      renderQuestions(questions);
+
+      const quizModal = document.getElementById("quiz-modal");
+      const modalQuestion = document.getElementById("modal-question");
+      const modalAnswers = document.getElementById("modal-answers");
+      const modalFeedback = document.getElementById("modal-feedback");
+      const feedbackText = document.getElementById("feedback-text");
+      const modalQuestionInfo = document.getElementById("modal-question-info");
+      const modalScore = document.getElementById("modal-score");
+      const modalCloseBtn = document.getElementById("modal-close");
+
+      let currentScore = 0;
+
+      function showQuizModal(question) {
+        const quizModal = document.getElementById("quiz-modal");
+        modalQuestion.textContent = question.question;
+        modalAnswers.innerHTML = "";
+
+        question.answers.forEach((answer, index) => {
+          const button = document.createElement("button");
+          button.className = `
+                answer-option 
+                w-full 
+                text-right 
+                bg-game-surface-light 
+                dark:bg-game-surface-dark 
+                p-6 
+                rounded-xl 
+                shadow-lg 
+                hover:shadow-xl
+                hover:scale-102
+                border-2 
+                border-game-primary 
+                transition-all 
+                duration-300
+                flex 
+                items-center 
+                justify-between
+                group
+            `;
+
+          button.innerHTML = `
+                <span class="text-lg">${answer}</span>
+                <span class="w-8 h-8 rounded-full border-2 border-game-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    ${String.fromCharCode(65 + index)}
+                </span>
+            `;
+
+          button.addEventListener("click", () => selectAnswer(index, question));
+          modalAnswers.appendChild(button);
+        });
+
+        modalQuestionInfo.textContent = `دسته: ${question.category} | سطح دشواری: ${question.difficulty}`;
+        modalScore.textContent = `امتیاز: ${currentScore}`;
+
+        quizModal.classList.remove("hidden");
+        requestAnimationFrame(() => {
+          quizModal.classList.add("modal-active");
+        });
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeQuizModal() {
+        const quizModal = document.getElementById("quiz-modal");
+        const answers = quizModal.querySelectorAll(".answer-option");
+
+        quizModal.classList.add("closing");
+        answers.forEach((answer, index) => {
+          setTimeout(() => {
+            answer.classList.add("fade-out");
+          }, index * 50);
+        });
+
+        document.body.style.overflow = "auto";
+
+        setTimeout(() => {
+          quizModal.classList.remove("modal-active", "closing");
+          quizModal.classList.add("hidden");
+          answers.forEach((answer) => answer.classList.remove("fade-out"));
+        }, 300);
+      }
+
+      function selectAnswer(index, question) {
+        const buttons = modalAnswers.getElementsByTagName("button");
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].disabled = true;
+          buttons[i].classList.remove(
+            "hover:scale-102",
+            "hover:border-game-primary"
+          );
+        }
+
+        const isCorrect = index === question.correct;
+        userAnswers.set(question.id, {
+          isCorrect,
+          userAnswer: question.answers[index],
+        });
+
+        if (isCorrect) {
+          currentScore++;
+          buttons[index].classList.add(
+            "bg-green-500",
+            "text-white",
+            "border-green-600"
+          );
+          buttons[index].classList.remove(
+            "bg-game-surface-light",
+            "dark:bg-game-surface-dark"
+          );
+        } else {
+          buttons[index].classList.add(
+            "bg-red-500",
+            "text-white",
+            "border-red-600"
+          );
+          buttons[question.correct].classList.add(
+            "bg-green-500",
+            "text-white",
+            "border-green-600"
+          );
+          buttons[index].classList.remove(
+            "bg-game-surface-light",
+            "dark:bg-game-surface-dark"
+          );
+          buttons[question.correct].classList.remove(
+            "bg-game-surface-light",
+            "dark:bg-game-surface-dark"
+          );
+        }
+
+        modalScore.textContent = `امتیاز: ${currentScore}`;
+        answeredQuestions.add(question.id);
+
+        const answers = document.querySelectorAll(".answer-option");
+        answers.forEach((answer, idx) => {
+          setTimeout(() => {
+            answer.classList.add("fade-out");
+          }, idx * 50);
+        });
+
+        setTimeout(() => {
+          closeQuizModal();
+          filterQuestions();
+        }, 2000);
+      }
+
+      document
+        .getElementById("modal-close")
+        .addEventListener("click", closeQuizModal);
+
+      document.getElementById("quiz-modal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("quiz-modal")) {
+          closeQuizModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document
+            .getElementById("quiz-modal")
+            .classList.contains("modal-active")
+        ) {
+          closeQuizModal();
+        }
+      });
+
+      function showHistoryModal() {
+        const historyModal = document.getElementById("history-modal");
+        const tableBody = document.getElementById("history-table-body");
+        tableBody.innerHTML = "";
+
+        const answeredQuestionsList = questions.filter((q) =>
+          answeredQuestions.has(q.id)
+        );
+
+        answeredQuestionsList.forEach((q) => {
+          const userAnswer = userAnswers.get(q.id);
+          const row = document.createElement("tr");
+          row.className = "border-b border-gray-200 dark:border-gray-700";
+
+          const statusCell = userAnswer.isCorrect
+            ? `<td class="py-3 px-4"><span class="text-green-500 font-bold">پاسخ صحیح</span></td>`
+            : `<td class="py-3 px-4">
+                <span class="text-red-500 font-bold">پاسخ اشتباه</span>
+                <br>
+                <span class="text-sm text-gray-500">پاسخ شما: ${userAnswer.userAnswer}</span>
+               </td>`;
+
+          row.innerHTML = `
+            <td class="py-3 px-4">${q.question}</td>
+            <td class="py-3 px-4">${q.answers[q.correct]}</td>
+            ${statusCell}
+            <td class="py-3 px-4">${q.category}</td>
+            <td class="py-3 px-4">${q.difficulty}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+
+        historyModal.classList.remove("hidden");
+        requestAnimationFrame(() => {
+          historyModal.classList.add("modal-active");
+        });
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeHistoryModal() {
+        const historyModal = document.getElementById("history-modal");
+
+        historyModal.classList.add("closing");
+        document.body.style.overflow = "auto";
+
+        setTimeout(() => {
+          historyModal.classList.remove("modal-active", "closing");
+          historyModal.classList.add("hidden");
+        }, 300);
+      }
+
+      document
+        .getElementById("show-history")
+        .addEventListener("click", showHistoryModal);
+      document
+        .getElementById("close-history")
+        .addEventListener("click", closeHistoryModal);
+      document
+        .getElementById("history-modal")
+        .addEventListener("click", (e) => {
+          if (e.target === document.getElementById("history-modal")) {
+            closeHistoryModal();
+          }
+        });
+
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document
+            .getElementById("history-modal")
+            .classList.contains("modal-active")
+        ) {
+          closeHistoryModal();
+        }
+      });
+    </script>
   </body>
 </html>
